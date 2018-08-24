@@ -68,7 +68,8 @@ def runUserCmd( action, user=None ):
          else:
             speech += 'Rest of the services are running.'
    elif 'intro' in action:
-       low = 0, high = intro_speeches.len
+       low = 0
+       high = intro_speeches.len
        rand_num = random.uniform(low, high)
        speech = intro_speeches[rand_num]
    elif 'capabilities' in action:
