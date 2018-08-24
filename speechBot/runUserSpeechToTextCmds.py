@@ -56,24 +56,25 @@ def runUserCmd( action, user=None ):
                              out[ 'mobile' ] )
       else:
          speech = "User %s does not exist. Please try again." % defaultUser
-   elif 'cv' in action:
+   elif 'cv' in action.lower():
       speech = ''
       output = os.popen( "echo -e 'su cvp\n cvpi status all' |a4 ssh root@cvp60" ).read()
+      print output
       if 'FAIL' in output:
          speech += "Few services are in failed state."
       if 'NOT RUNNING' in output:
          speech += 'Few services are not running.'
-         if speech == '':
-            speech += 'All services are healthy and running.'
-         else:
-            speech += 'Rest of the services are running.'
+      if speech == '':
+         speech += 'All services are healthy and running.'
+      else:
+         speech += 'Rest of the services are running.'
    elif 'intro' in action:
-       low = 0
-       high = intro_speeches.len
-       rand_num = random.uniform(low, high)
-       speech = intro_speeches[rand_num]
+      low = 0
+      high = len( intro_speeches )
+      rand_num = random.uniform(low, high)
+      speech = intro_speeches[int( rand_num )]
    elif 'capabilities' in action:
-        speech = "Can do wonders"
+      speech = "Here is the list of mundane tasks that I can do. Check user information, Get project information, Check cvp services status and I can learn more."
    out[ 'speech' ] = speech
 
    print out

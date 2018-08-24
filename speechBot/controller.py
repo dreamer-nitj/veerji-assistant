@@ -15,17 +15,18 @@ CORS(app)
 app.config[ "DEBUG" ] = True
 
 actionMap = {
-    ( "information", "for" ): "dir",
-    ( "info", "for" ): "dir",
-    ( "dir", "for" ): "dir",
-    ( "project", "status", "for" ): "mut",
-    ( "information", "of" ): "dir",
-    ( "info", "of" ): "dir",
-    ( "dir", "of" ): "dir",
-    ( "project", "status", "of" ): "mut",
-    ( "cvp", "status", "for" ):"cvp",
-    ( "introduction", "intro", "your", "info" ): "intro",
-    ( "capabilities", "superpowers", "superpower", "powers", "power" ): "capabilities"
+   ( "information", "for" ): "dir",
+   ( "info", "for" ): "dir",
+   ( "dir", "for" ): "dir",
+   ( "project", "status", "for" ): "mut",
+   ( "information", "of" ): "dir",
+   ( "info", "of" ): "dir",
+   ( "dir", "of" ): "dir",
+   ( "project", "status", "of" ): "mut",
+   ( "cvp", "status", "for" ):"cvp",
+   ( "cv", "status", "for" ):"cvp",
+   ( "introduction", "intro", "your", "info" ): "intro",
+   ( "capabilities", "superpowers", "superpower", "powers", "power" ): "capabilities"
 }
 
 @app.route( '/api/bot/', methods=[ 'GET' ] )
