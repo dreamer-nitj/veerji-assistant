@@ -2,10 +2,11 @@
 
 import Tac
 import shlex
+import os
 
 defaultUser = 'sonu'
 actionToCmdMap = { 'mut' : 'a4 mut status -u %s -c 2 -a',
-                 'dir' : 'a dir %s' }
+                   'dir' : 'a dir %s' }
 
 def runUserCmd( action, user=None ):
    print "action ", action, " user ", user
@@ -48,6 +49,21 @@ def runUserCmd( action, user=None ):
                              out[ 'mobile' ] )
       else:
          speech = "User %s does not exist. Please try again." % defaultUser
+   elif 'cv' in action:
+      speech = ''
+      out = os.popen( "echo -e 'su cvp\n cvpi status all' |a4 ssh root@cvp60" ).read()
+      if 'FAIL' in out:
+         speech += "Few services are in failed state."
+      if 'NOT RUNNING' in out:
+         speech += 'Few services are not running.'
+         if speech == '':
+            speech += 'All services are healthy and running.'
+         else:
+            speech += 'Rest of the services are running.'
+   elif 'intro' in action:
+   	speech = "SatSriAkal! I am Veer Ji also known as Big Brother. And I can help in finding project information"
+   elif 'capabilities' in action:
+        speech = "Can do wonders"
    out[ 'speech' ] = speech
 
    print out
