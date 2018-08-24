@@ -20,7 +20,7 @@ def runUserCmd( action, user=None ):
 
    global defaultUser
    if user:
-      defaultUser = user
+      defaultUser = user.lower()
 
    speech = 'I did not hear it right, can you repeat.'
    out = {}
@@ -37,7 +37,7 @@ def runUserCmd( action, user=None ):
       speech = "%s " % defaultUser
       for proj in out:
          speech += "project %s is %s" % ( proj, out[ proj ] )
-      else:
+      if len( speech ) < 15:
          speech += ' user does not exist. Please try again.'
 
    elif 'dir' in action:
@@ -58,7 +58,7 @@ def runUserCmd( action, user=None ):
          speech = "User %s does not exist. Please try again." % defaultUser
    elif 'cv' in action.lower():
       speech = ''
-      output = os.popen( "echo -e 'su cvp\n cvpi status all' |a4 ssh root@cvp60" ).read()
+      output = os.popen( "echo -e 'su cvp\n cvpi status all' |a4 ssh root@%s" % defaultUser ).read()
       print output
       if 'FAIL' in output:
          speech += "Few services are in failed state."
@@ -68,6 +68,8 @@ def runUserCmd( action, user=None ):
          speech += 'All services are healthy and running.'
       else:
          speech += 'Rest of the services are running.'
+      if speech == '':
+         speech += "I'm sorry, the cvp node is not reachable."
    elif 'intro' in action:
       low = 0
       high = len( intro_speeches )

@@ -5,6 +5,7 @@
 import json
 import flask
 import runUserSpeechToTextCmds as backend
+import re
 from flask import jsonify
 from flask import request
 from flask import Response
@@ -25,8 +26,8 @@ actionMap = {
    ( "project", "status", "of" ): "mut",
    ( "cvp", "status", "for" ):"cvp",
    ( "cv", "status", "for" ):"cvp",
-   ( "introduction", "intro", "your", "info" ): "intro",
-   ( "capabilities", "superpowers", "superpower", "powers", "power" ): "capabilities"
+   ( "introduction", "intro", "introduce", "your", "info" ): "intro",
+   ( "capabilities", "superpowers", "superpower", "powers", "power", "your" ): "capabilities"
 }
 
 @app.route( '/api/bot/', methods=[ 'GET' ] )
@@ -66,6 +67,9 @@ def runCmd():
          entityID = reqActionTokens[ i ]
 
       print "Action is: ", action, " Action tokens are: ", actionKey, " Entity ID is:", entityID
+
+      if 'cv' in action and i != 0:
+         entityID = 'cvp' + re.findall( r"(\d+)", cmd )[ 0 ]
 
       print "Request command: ", request.json
       # call backend for the response
