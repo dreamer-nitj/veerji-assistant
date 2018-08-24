@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+# Copyright (c) 2018 Arista Networks, Inc.  All rights reserved.
+# Arista Networks, Inc. Confidential and Proprietary.
+
+import Tac
+import shlex
+
+USER = 'sonu'
+textToCmdMap = { 'mut' : 'a4 mut status -u %s -a',
+                 'dir' : 'a dir %s' }
+
+contextToCmdMap = {
+   'dir': 'dir',
+   'mut': 'mut',
+   'information': 'dir',
+   'project': 'mut',
+   'me': 'dir',
+}
+
+def runUserCmd( inputText ):
+   print inputText
+   out = { 'Error' : 'Unable to map input speech to cmd.' }
+   if 'mut' in inputText:
+      cmd = shlex.split( textToCmdMap[ 'mut' ] % USER )
+      out = Tac.run( cmd, stdout=Tac.CAPTURE )
+
+      # convert to json
+      lines = out.split( '\n' )
+      out = {}
+      for line in lines[ 2 : -1 ]:
+         out[ line.split()[ 1 ] ] = line.split()[ 3 ]
+
+   elif 'dir' in inputText:
+      cmd = shlex.split( textToCmdMap[ 'dir' ] % USER )
+      out = Tac.run( cmd, stdout=Tac.CAPTURE )
+
+      # convert to json format
+      out = out.replace( ":", "':'" ).replace( "\n", "','" ).replace( " ", "" )
+      out = eval( "{'" + out[ : -2 ] + "}" )
+
+   print out
+   return out
+
+
+def requestHandler( request ):
+   request = request.lower()
+   for key in contextToCmdMap:
+      if key in request:
+         output = runUserCmd( contextToCmdMap[ key ] )
+         return output
+   return "No answer found to your query!. Please try again"
