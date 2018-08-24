@@ -25,7 +25,7 @@ actionMap = {
     ( "project", "status", "of" ): "mut",
     ( "cvp", "status", "for" ):"cvp",
     ( "introduction", "intro", "your", "info" ): "intro",
-    ( "capabilities", "super", "powers" ): "capabilities"
+    ( "capabilities", "superpowers", "superpower", "powers", "power" ): "capabilities"
 }
 
 @app.route( '/api/bot/', methods=[ 'GET' ] )

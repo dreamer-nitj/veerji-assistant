@@ -3,10 +3,17 @@
 import Tac
 import shlex
 import os
+import random
 
 defaultUser = 'sonu'
 actionToCmdMap = { 'mut' : 'a4 mut status -u %s -c 2 -a',
                    'dir' : 'a dir %s' }
+
+intro_speeches = [
+    "SatSriAkal! I am Veer Ji also known as Big Brother. And I can help in finding project information",
+    "Namaskara! I am Veer Ji also known as Big Brother. Let me know if you need user information",
+    "Hola! I am Veer Ji The Big Brother! Ask me no questions, I will tell you no lies"
+    ]
 
 def runUserCmd( action, user=None ):
    print "action ", action, " user ", user
@@ -61,7 +68,9 @@ def runUserCmd( action, user=None ):
          else:
             speech += 'Rest of the services are running.'
    elif 'intro' in action:
-   	speech = "SatSriAkal! I am Veer Ji also known as Big Brother. And I can help in finding project information"
+       low = 0, high = intro_speeches.len
+       
+       speech = ""
    elif 'capabilities' in action:
         speech = "Can do wonders"
    out[ 'speech' ] = speech
