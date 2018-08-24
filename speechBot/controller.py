@@ -24,6 +24,8 @@ actionMap = {
     ( "dir", "of" ): "dir",
     ( "project", "status", "of" ): "mut",
     ( "cvp", "status", "for" ):"cvp",
+    ( "introduction", "intro", "your", "info" ): "intro",
+    ( "capabilities", "super", "powers" ): "capabilities"
 }
 
 @app.route( '/api/bot/', methods=[ 'GET' ] )
