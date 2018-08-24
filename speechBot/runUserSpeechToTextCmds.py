@@ -51,10 +51,10 @@ def runUserCmd( action, user=None ):
          speech = "User %s does not exist. Please try again." % defaultUser
    elif 'cv' in action:
       speech = ''
-      out = os.popen( "echo -e 'su cvp\n cvpi status all' |a4 ssh root@cvp60" ).read()
-      if 'FAIL' in out:
+      output = os.popen( "echo -e 'su cvp\n cvpi status all' |a4 ssh root@cvp60" ).read()
+      if 'FAIL' in output:
          speech += "Few services are in failed state."
-      if 'NOT RUNNING' in out:
+      if 'NOT RUNNING' in output:
          speech += 'Few services are not running.'
          if speech == '':
             speech += 'All services are healthy and running.'
